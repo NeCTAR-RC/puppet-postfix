@@ -1,4 +1,4 @@
-class postfix($smtp_host, $root_email_address, $inet_interfaces='loopback-only') {
+class postfix($smtp_host, $root_email_address, $inet_interfaces='loopback-only', $aliases=[]) {
 
   $postfix_pkgs = ['postfix', 'bsd-mailx']
 
