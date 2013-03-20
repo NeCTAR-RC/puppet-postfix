@@ -1,6 +1,6 @@
 # See man 5 aliases for format
 postmaster: root
 root: <%= @root_email_address %>
-<% aliases.each do |alias| -%>
-<%= alias %>
+<% aliases.each do |a| -%>
+<%= a %>
 <% end -%>
