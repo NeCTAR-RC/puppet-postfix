@@ -1,6 +1,10 @@
 # See man 5 aliases for format
+
+# Managed by PUPPET
+
 postmaster: root
 root: <%= @root_email_address %>
+
 <% aliases.each do |a| -%>
 <%= a %>
 <% end -%>
