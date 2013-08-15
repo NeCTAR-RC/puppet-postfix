@@ -3,6 +3,9 @@
 # Managed by PUPPET
 
 postmaster: root
+nobody: root
+nagios: root
+www-data: root
 root: <%= @root_email_address %>
 
 <% aliases.each do |a| -%>
