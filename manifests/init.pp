@@ -44,8 +44,19 @@ class postfix($smtp_host, $root_email_address, $inet_interfaces='loopback-only',
     refreshonly => true,
   }
 
-  # legcay way
-  file {'/root/.forward':
+  include rsyslog
+
+  file { '/etc/rsyslog.d/postfix.conf':
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    source  => 'puppet:///modules/postfix/rsyslog.conf',
+    notify  => Service['rsyslog'],
+  }
+
+  # remove legacy way
+  file { '/root/.forward':
     ensure  => absent,
   }
 }
