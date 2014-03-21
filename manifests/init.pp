@@ -44,8 +44,4 @@ class postfix($smtp_host, $root_email_address, $inet_interfaces='loopback-only',
     refreshonly => true,
   }
 
-  # remove legacy way
-  file { '/root/.forward':
-    ensure  => absent,
-  }
 }
