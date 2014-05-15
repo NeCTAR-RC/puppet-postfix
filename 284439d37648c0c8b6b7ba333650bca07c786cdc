@@ -1,0 +1,8 @@
+Change-Id: I284439d37648c0c8b6b7ba333650bca07c786cdc
+Code-Review+2: Russell Sim <russell.sim@gmail.com>
+Verified+1: Russell Sim <russell.sim@gmail.com>
+Submitted-by: Russell Sim <russell.sim@gmail.com>
+Submitted-at: Thu, 15 May 2014 17:09:23 +1000
+Reviewed-on: https://review.rc.nectar.org.au/1333
+Project: NeCTAR-RC/puppet-postfix
+Branch: refs/meta/config
