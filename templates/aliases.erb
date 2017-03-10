@@ -4,10 +4,10 @@
 
 postmaster: root
 nobody: root
-nagios: root
+nagios: "Nagios <%= @fqdn %> <melbourne_robots@rc.nectar.org.au>"
 www-data: root
 root: <%= @root_email_address %>
 
-<% aliases.each do |a| -%>
+<% @aliases.each do |a| -%>
 <%= a %>
 <% end -%>
