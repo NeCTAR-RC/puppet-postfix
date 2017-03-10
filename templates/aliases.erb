@@ -8,6 +8,6 @@ nagios: root
 www-data: root
 root: <%= @root_email_address %>
 
-<% aliases.each do |a| -%>
+<% @aliases.each do |a| -%>
 <%= a %>
 <% end -%>
