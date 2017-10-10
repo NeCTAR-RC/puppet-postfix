@@ -1,6 +1,10 @@
 class postfix($smtp_host, $root_email_address, $inet_interfaces='loopback-only', $aliases=[]) {
 
-  $postfix_pkgs = ['postfix', 'bsd-mailx']
+  $postfix_pkgs = $::osfamily ? {
+    'Debian'  => ['postfix', 'bsd-mailx'],
+    'RedHat'  => ['postfix',],
+    default   => ['postfix',],
+  }
 
   package { $postfix_pkgs :
     ensure  => installed,
