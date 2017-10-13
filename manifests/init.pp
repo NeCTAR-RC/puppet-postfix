@@ -1,4 +1,11 @@
-class postfix($smtp_host, $root_email_address, $inet_interfaces='loopback-only', $aliases=[]) {
+class postfix(
+  $smtp_host,
+  $root_email_address,
+  $inet_interfaces='loopback-only',
+  $aliases=[],
+  $default_destination_concurrency_limit = 1,
+  $default_destination_recipient_limit = 3,
+) {
 
   $postfix_pkgs = $::osfamily ? {
     'Debian'  => ['postfix', 'bsd-mailx'],
