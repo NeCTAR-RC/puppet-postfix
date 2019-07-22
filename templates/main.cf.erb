@@ -28,6 +28,9 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 # See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
 # information on enabling SSL in the smtp client.
 
+<%- if scope.function_versioncmp([@postfix_version, '3.3.0']) < 1 -%>
+smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
+<%- end -%>
 myhostname = <%= @fqdn %>
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
