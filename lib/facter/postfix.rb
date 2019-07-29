@@ -1,7 +1,6 @@
-if FileTest.exists?("/usr/sbin/postconf")
-  Facter.add('postfix_version') do
-    setcode do
-      %x{postconf -d | awk '/^mail_version/ {print $NF}'}.chomp
-    end
+Facter.add('postfix_version') do
+  setcode do
+    postconf = Facter::Util::Resolution.exec('postconf -d')
+    postconf.match(%r{^mail_version = (\d+\.\d+.*)$})[1] if postconf
   end
 end
