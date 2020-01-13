@@ -44,3 +44,6 @@ inet_interfaces = <%= @inet_interfaces %>
 
 default_destination_concurrency_limit = <%= @default_destination_concurrency_limit %>
 default_destination_recipient_limit = <%= @default_destination_recipient_limit %>
+<% @extra_config_options.each do |key,value| -%>
+<%= key -%> = <%= value %>
+<% end -%>

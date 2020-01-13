@@ -6,6 +6,7 @@ class postfix(
   $default_destination_concurrency_limit = 1,
   $default_destination_recipient_limit = 3,
   $myorigin = '$myhostname',
+  $extra_config_options = {},
 ) {
 
   $postfix_pkgs = $::osfamily ? {
