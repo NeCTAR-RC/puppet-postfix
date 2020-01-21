@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef59825b_9cd10b8f",
+        "filename": "templates/main.cf.erb",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-21T01:11:28Z",
+      "side": 1,
+      "message": "may not be required anymore but previously we needed to add a sort here as subsequent runs of puppet would give a different order of the hash and so it would constantly change the config file.",
+      "revId": "5e52c9d60a0b09ab349816656b1268c9e0dde5d5",
+      "serverId": "f182a8af-62ca-4ceb-ab81-14f8fec9c6c5",
+      "unresolved": true
+    }
+  ]
+}
