@@ -6,6 +6,9 @@ class postfix(
   $default_destination_concurrency_limit = 1,
   $default_destination_recipient_limit = 3,
   $myorigin = '$myhostname',
+  $smtpd_tls_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem',
+  $smtpd_tls_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key',
+  $smtpd_use_tls = 'yes',
   $extra_config_options = {},
 ) {
 
