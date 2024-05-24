@@ -12,7 +12,7 @@ class postfix(
   $extra_config_options = {},
 ) {
 
-  $postfix_pkgs = $::osfamily ? {
+  $postfix_pkgs = $facts['os']['family'] ? {
     'Debian'  => ['postfix', 'bsd-mailx'],
     'RedHat'  => ['postfix',],
     default   => ['postfix',],
@@ -23,7 +23,7 @@ class postfix(
   }
 
   service { 'postfix':
-    ensure => running,
+    ensure  => running,
     require => Package[$postfix_pkgs],
   }
 
@@ -32,7 +32,7 @@ class postfix(
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => $::fqdn,
+    content => $facts['networking']['fqdn'],
   }
 
   file { '/etc/postfix/main.cf':
