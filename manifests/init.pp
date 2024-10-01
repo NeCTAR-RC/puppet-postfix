@@ -1,25 +1,30 @@
-class postfix(
-  $smtp_host,
-  $root_email_address,
-  $inet_interfaces='loopback-only',
-  $aliases=[],
-  $default_destination_concurrency_limit = 1,
-  $default_destination_recipient_limit = 3,
-  $myorigin = '$myhostname',
-  $smtpd_tls_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem',
-  $smtpd_tls_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key',
-  $smtpd_use_tls = 'yes',
-  $extra_config_options = {},
+class postfix (
+  String $smtp_host,
+  String $root_email_address,
+  String $inet_interfaces                        = 'loopback-only',
+  Array $aliases                                 = [],
+  Integer $default_destination_concurrency_limit = 1,
+  Integer $default_destination_recipient_limit   = 3,
+  Array $mynetworks                              = ['127.0.0.0/8', '[::ffff:127.0.0.0]/104', '[::1]/128'],
+  String $myorigin                               = '$myhostname',
+  String $smtpd_tls_cert_file                    = '/etc/ssl/certs/ssl-cert-snakeoil.pem',
+  String $smtpd_tls_key_file                     = '/etc/ssl/private/ssl-cert-snakeoil.key',
+  Enum['yes', 'no'] $smtpd_use_tls               = 'yes',
+  Optional[String] $smtp_tls_security_level      = undef,
+  String $smtp_tls_cafile                        = '/etc/ssl/certs/ca-certificates.crt',
+  Hash $extra_config_options                     = {},
+  Optional[String] $sasl_username                = undef,
+  Optional[Sensitive[String]] $sasl_password     = undef,
 ) {
 
   $postfix_pkgs = $facts['os']['family'] ? {
-    'Debian'  => ['postfix', 'bsd-mailx'],
-    'RedHat'  => ['postfix',],
-    default   => ['postfix',],
+    'Debian' => ['postfix', 'bsd-mailx'],
+    'RedHat' => ['postfix',],
+    default  => ['postfix',],
   }
 
   package { $postfix_pkgs :
-    ensure  => installed,
+    ensure => installed,
   }
 
   service { 'postfix':
@@ -60,4 +65,21 @@ class postfix(
     refreshonly => true,
   }
 
+  if ($sasl_password) {
+    file { '/etc/postfix/sasl_passwd':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0600',
+      content => inline_epp('<%= $smtp_host %>	<%= $sasl_username %>:<%= $sasl_password %>'),
+      notify  => Exec['rebuild-sasl-passwd'],
+      require => Package[$postfix_pkgs],
+    }
+
+    exec { 'rebuild-sasl-passwd':
+      command     => '/usr/sbin/postmap hash:/etc/postfix/sasl_passwd',
+      cwd         => '/etc/postfix',
+      refreshonly => true,
+      notify      => Service['postfix'],
+    }
+  }
 }

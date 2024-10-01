@@ -1,0 +1,4 @@
+---
+lookup_options:
+  postfix::sasl_password:
+    convert_to: "Sensitive"
