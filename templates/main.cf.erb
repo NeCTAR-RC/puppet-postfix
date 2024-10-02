@@ -48,14 +48,12 @@ inet_interfaces = <%= @inet_interfaces %>
 
 default_destination_concurrency_limit = <%= @default_destination_concurrency_limit %>
 default_destination_recipient_limit = <%= @default_destination_recipient_limit %>
-
 <%- if @sasl_password -%>
 # SASL authentication
 smtp_sasl_auth_enable = yes
 smtp_sasl_security_options = noanonymous
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 <% end -%>
-
 <% @extra_config_options.each do |key,value| -%>
 <%= key -%> = <%= value %>
 <% end -%>
