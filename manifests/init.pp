@@ -5,7 +5,7 @@ class postfix (
   Array $aliases                                 = [],
   Integer $default_destination_concurrency_limit = 1,
   Integer $default_destination_recipient_limit   = 3,
-  Array $mynetworks                              = ['127.0.0.0/8', '[::ffff:127.0.0.0]/104', '[::1]/128'],
+  Array $mynetworks                              = [],
   String $myorigin                               = '$myhostname',
   String $smtpd_tls_cert_file                    = '/etc/ssl/certs/ssl-cert-snakeoil.pem',
   String $smtpd_tls_key_file                     = '/etc/ssl/private/ssl-cert-snakeoil.key',
@@ -39,6 +39,10 @@ class postfix (
     mode    => '0644',
     content => $facts['networking']['fqdn'],
   }
+
+  # List of localhost networks to always be added
+  $local_networks = ['127.0.0.0/8', '[::ffff:127.0.0.0]/104', '[::1]/128']
+  $real_mynetworks = $local_networks + $mynetworks
 
   file { '/etc/postfix/main.cf':
     ensure  => present,
@@ -81,5 +85,12 @@ class postfix (
       refreshonly => true,
       notify      => Service['postfix'],
     }
+  }
+
+  # Firewall rules for any external networks given
+  nectar::firewall::multisource {[ prefix($mynetworks, '300 smtp,') ]:
+    jump  => 'ACCEPT',
+    proto => 'tcp',
+    dport =>  25,
   }
 }
