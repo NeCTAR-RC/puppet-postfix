@@ -2,6 +2,7 @@ class postfix (
   String $smtp_host,
   String $root_email_address,
   String $inet_interfaces                        = 'loopback-only',
+  String $inet_protocols                         = 'all',
   Array $aliases                                 = [],
   Integer $default_destination_concurrency_limit = 1,
   Integer $default_destination_recipient_limit   = 3,
