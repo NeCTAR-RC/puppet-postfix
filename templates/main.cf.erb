@@ -35,11 +35,11 @@ smtp_tls_security_level = <%= @smtp_tls_security_level %>
 <%- if defined?(@postfix_version) && scope.function_versioncmp([@postfix_version, '3.3.0']) >= 0 -%>
 smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
 <%- end -%>
-myhostname = <%= @fqdn %>
+myhostname = <%= @facts['networking']['fqdn'] %>
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = <%= @myorigin %>
-mydestination = <%= @myorigin %>, <%= @hostname %>, <%= @fqdn %>, localhost.<%= @domain %>, localhost
+mydestination = <%= @myorigin %>, <%= @facts['networking']['hostname'] %>, <%= @facts['networking']['fqdn'] %>, localhost.<%= @facts['networking']['domain'] %>, localhost
 relayhost = <%= @smtp_host %>
 mynetworks = <%= @real_mynetworks.join(' ') %>
 mailbox_size_limit = 0
